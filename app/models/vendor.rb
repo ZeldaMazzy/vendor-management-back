@@ -1,5 +1,8 @@
 class Vendor < ApplicationRecord
   belongs_to :user 
+  has_many :assignments
+  has_many :projects, through: :assignments
+
   validates :name, presence: true
   validates :age, presence: true
   validates :gender, presence: true

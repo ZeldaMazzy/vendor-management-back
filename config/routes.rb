@@ -1,9 +1,13 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :assignments
   resources :projects
   resources :vendors
   require 'sidekiq/web'
+
+  root 'pages#home'
+  get 'about', to: 'pages#about'
 
   scope :monitoring do
     # Sidekiq Basic Auth from routes on production environment
@@ -26,7 +30,13 @@ Rails.application.routes.draw do
         delete :logout
         get :me
         post :create
+      end  
+      namespace :projects do
+        get :my_projects
       end
+      resources :projects
+      resources :vendors
     end
   end
+
 end

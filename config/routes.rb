@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :assignments
-  resources :projects
-  resources :vendors
   require 'sidekiq/web'
 
   scope :monitoring do

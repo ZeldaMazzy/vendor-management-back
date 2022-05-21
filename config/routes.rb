@@ -31,7 +31,7 @@ Rails.application.routes.draw do
       namespace :projects do
         get :my_projects
       end
-      namespace :venders do
+      namespace :vendors do
         get :my_vendors
       end
       resources :projects

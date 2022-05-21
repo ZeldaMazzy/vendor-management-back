@@ -38,7 +38,7 @@ module Api
 
       private
         def project_params
-          params.require(:project).permit(:title, :client, :budget, :due_date, :talent_needed)
+          params.require(:project).permit(:title, :client, :budget, :due_date, :talent_needed, assignment_ids: [])
         end
 
     end

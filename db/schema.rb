@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_17_005405) do
+ActiveRecord::Schema.define(version: 2022_05_20_201722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assignments", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "vendor_id", null: false
+    t.string "role", null: false
+    t.boolean "is_cast", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_assignments_on_project_id"
+    t.index ["vendor_id"], name: "index_assignments_on_vendor_id"
+  end
 
   create_table "projects", force: :cascade do |t|
     t.string "title"
@@ -24,6 +35,7 @@ ActiveRecord::Schema.define(version: 2022_05_17_005405) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "vendors_id"
+    t.integer "talent_needed"
     t.index ["user_id"], name: "index_projects_on_user_id"
     t.index ["vendors_id"], name: "index_projects_on_vendors_id"
   end
@@ -79,9 +91,14 @@ ActiveRecord::Schema.define(version: 2022_05_17_005405) do
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "image_path"
+    t.integer "phone"
+    t.string "email"
     t.index ["user_id"], name: "index_vendors_on_user_id"
   end
 
+  add_foreign_key "assignments", "projects"
+  add_foreign_key "assignments", "vendors"
   add_foreign_key "projects", "vendors", column: "vendors_id"
   add_foreign_key "tokens", "users"
   add_foreign_key "user_roles", "roles"

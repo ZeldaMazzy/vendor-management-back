@@ -6,9 +6,6 @@ Rails.application.routes.draw do
   resources :vendors
   require 'sidekiq/web'
 
-  root 'pages#home'
-  get 'about', to: 'pages#about'
-
   scope :monitoring do
     # Sidekiq Basic Auth from routes on production environment
     if Rails.env.production?
@@ -33,6 +30,9 @@ Rails.application.routes.draw do
       end  
       namespace :projects do
         get :my_projects
+      end
+      namespace :venders do
+        get :my_vendors
       end
       resources :projects
       resources :vendors

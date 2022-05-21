@@ -7,8 +7,7 @@ class Vendor < ApplicationRecord
   validates :age, presence: true
   validates :gender, presence: true
   validates :race, presence: true
-  validates :height, presence: true
-  validates :weight, presence: true
-  validates :dayrate, presence: true
+  validates :phone, presence: true
+  validates :email, presence: true
 
 end

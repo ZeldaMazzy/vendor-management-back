@@ -37,7 +37,7 @@ module Api
 
       private
         def vendor_params
-          params.require(:vendor).permit(:name, :age, :gender, :race, :phone, :email, :image_path, :height, :weight, :dayrate, :user_id, :profile_photo)
+          params.require(:vendor).permit(:name, :age, :gender, :race, :phone, :email, :image_path, :dayrate, :user_id, :profile_photo)
         end
     end
   end

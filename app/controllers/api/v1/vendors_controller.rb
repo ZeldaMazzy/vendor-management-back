@@ -3,10 +3,10 @@ module Api
     class VendorsController < Api::V1::ApplicationController
 
       def create 
-        vendor = @current_user.vendors.new(vendor_params)
-        return render_error(errors: "Error saving the vendor") unless vendor.save
+        # vendor = @current_user.vendors.new(vendor_params)
         result = Vendors.new_vendor(vendor_params, @current_user)
-        render_errors(errors: "There was a problem creating a new vendor", status: 400)
+        return render_error(errors: "Error saving the vendor", status: 400) unless result.success?
+
         payload = {
           vendor: VendorBlueprint.render_as_hash(result.payload)
         }
@@ -14,8 +14,11 @@ module Api
       end
 
       def update
+        vendor - Vendor.find(vendor_params[:vendor_id])
+        vendor.image_path.attach(vendor_params[:profile_photo])
+        super
         result = Vendors.update_vendor(params[:id], vendor_params, @current_user)
-        render_errors(errors: "There was a problem updating the vendor", status: 400) and return unless result.success?
+        render_error(errors: "There was a problem updating the vendor", status: 400) and return unless result.success?
         payload = {
           vendor: VendorBlueprint.render_as_hash(result.payload)
         }
@@ -23,8 +26,8 @@ module Api
       end
 
       def destroy
-        result = Vendors.destroy_vendor(params[:id], vendor_params, @current_user)
-        render_errors(errors: "There was a problem deleting the vendor", status: 400) and return unless result.success?
+        result = Vendors.destroy_vendor(params[:id], @current_user)
+        render_error(errors: "There was a problem deleting the vendor", status: 400) and return unless result.success?
         render_success(payload: nil)
       end
 
@@ -34,7 +37,7 @@ module Api
 
       private
         def vendor_params
-          params.require(:vendor).permit(:name, :age, :gender, :race, :phone, :email, :image_path, :height, :weight, :dayrate, :user_id)
+          params.require(:vendor).permit(:name, :age, :gender, :race, :phone, :email, :image_path, :height, :weight, :dayrate, :user_id, :profile_photo)
         end
     end
   end

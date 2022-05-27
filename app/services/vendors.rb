@@ -7,7 +7,7 @@ module Vendors
   end
 
   def self.update_vendor(vendor_id, params, current_user)
-    vendor = current_vendor.vendors.find(vendor_id)
+    vendor = current_user.vendors.find(vendor_id)
     return ServiceContract.error("Error updating vendor") unless vendor.update(params)
     ServiceContract.success(vendor)
   end

@@ -13,10 +13,7 @@ module Api
         render_success(payload: payload)
       end
 
-      def update
-        vendor - Vendor.find(vendor_params[:vendor_id])
-        vendor.image_path.attach(vendor_params[:profile_photo])
-        super
+      def update 
         result = Vendors.update_vendor(params[:id], vendor_params, @current_user)
         render_error(errors: "There was a problem updating the vendor", status: 400) and return unless result.success?
         payload = {

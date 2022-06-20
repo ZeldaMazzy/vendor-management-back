@@ -7,7 +7,7 @@ module Api
         project = @current_user.projects.new(project_params)
         return render_error(errors: "Error saving the project") unless project.save
         result = Projects.new_project(project_params, @current_user)
-        render_errors(errors: "There was a problem creating a new project", status: 400)
+        render_error(errors: "There was a problem creating a new project", status: 400)
         payload = {
           project: ProjectBlueprint.render_as_hash(result.payload)
         }
